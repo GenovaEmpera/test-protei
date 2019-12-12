@@ -1,0 +1,15 @@
+<div class="shadow"></div>
+<div class="container">
+<div class="popup" *ngIf="article">
+    <div class="popup-title">{{ article.title }}</div>
+    <div class="popup-text">{{ article.body }}</div>
+    <ul class="popup-comments">
+      <p>Comments:</p>
+      <li class="popup-comment"
+          *ngFor="let comment of article.comments; let i = index">
+          <div class="popup-comment-number">{{ i + 1 }}</div>
+          <div class="popup-comment-text">{{ comment.body }}</div>
+    </li>
+    </ul>
+</div>
+</div>

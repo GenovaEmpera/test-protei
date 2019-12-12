@@ -1,0 +1,63 @@
+<app-pop-up *ngIf="popUpOpen"
+            [article]="popUpItem"
+            (closePopup)="closePopup()"></app-pop-up>
+  <div class="wrapper">
+  <div class="container">
+  <app-filter class="filter"
+              [filterList]="userList$ | async"
+              [default]="'Фильтр по имени'"
+              (selectItem)=filterByUser($event)>
+  </app-filter>
+  <div class="search">
+    <input class="search-input" type="text"
+           [(ngModel)]="inputText"
+           (keyup.enter)="searchArticles()"
+           placeholder="Поиск по публикациям...">
+  </div>
+  </div>
+  <div class="articles">
+    <p *ngIf="!articleList.length">Данных нет</p>
+    <ng-container *ngIf="articleList.length">
+  <div class="row head">
+    <div class="cell" (click)="sortTable('username')"
+         [ngClass]="{'active': sortParam==='username'}">
+        <span class="cell-title">Имя пользователя</span>
+        <span>
+          <img src="../../assets/icons/circle-down.svg"
+               [ngClass]="{'rotate': sortOrderAB}">
+        </span>
+    </div>
+    <div class="cell" (click)="sortTable('city')"
+         [ngClass]="{'active': sortParam==='city'}">
+      <span class="cell-title">Название города</span>
+      <span>
+        <img src="../../assets/icons/circle-down.svg"
+             [ngClass]="{'rotate': sortOrderAB}">
+      </span>
+    </div>
+    <div class="cell" (click)="sortTable('title')"
+         [ngClass]="{'active': sortParam==='title'}">
+      <span class="cell-title">Название публикации</span>
+      <span>
+        <img src="../../assets/icons/circle-down.svg"
+             [ngClass]="{'rotate': sortOrderAB}">
+      </span>
+    </div>
+    <div class="cell" (click)="sortTable('commentCount')"
+         [ngClass]="{'active': sortParam==='commentCount'}">
+      <span class="cell-title">Количество комментариев</span>
+      <span>
+        <img src="../../assets/icons/circle-down.svg"
+             [ngClass]="{'rotate': sortOrderAB}">
+      </span>
+    </div>
+  </div>
+  <div class="row" *ngFor="let article of articleList" (click)=showArticleInfo(article)>
+    <div class="cell">{{ article.username }}</div>
+    <div class="cell">{{ article.city }}</div>
+    <div class="cell">{{ article.title }}</div>
+    <div class="cell">{{ article.comments?.length }}</div>
+  </div>
+</ng-container>
+</div>
+</div>
